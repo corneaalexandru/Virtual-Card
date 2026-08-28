@@ -218,24 +218,6 @@
             opacity: 0.8;
         }
 
-        .qr-section {
-            margin-top: 56px;
-            padding-top: 40px;
-            border-top: 1px solid var(--border);
-            text-align: center;
-        }
-
-        #qrcode {
-            display: inline-block;
-        }
-
-        footer {
-            margin-top: 40px;
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-align: center;
-        }
-
         @media (max-width: 480px) {
             body {
                 padding: 16px;
@@ -289,43 +271,12 @@
             </form>
         </div>
 
-        <div class="qr-section">
-            <div id="qrcode"></div>
-        </div>
-
-        <footer>
-            <p>Order creates leverage, and change creates opportunity.</p>
-        </footer>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         // Theme Handling
         const root = document.documentElement;
         const themeToggleIcon = document.querySelector('.theme-toggle i');
-
-        function generateQRCode() {
-            const qrcodeContainer = document.getElementById("qrcode");
-            // Clear existing QR code
-            qrcodeContainer.innerHTML = '';
-
-            // Determine colors based on current theme
-            const isDark = root.getAttribute('data-theme') === 'dark' ||
-                (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-
-            const colorDark = isDark ? "#ffffff" : "#000000";
-            const colorLight = isDark ? "#000000" : "#ffffff";
-
-            // Generate new QR code with appropriate colors
-            new QRCode(qrcodeContainer, {
-                text: "https://linkedin.com/in/alexandrucornea",
-                width: 150,
-                height: 150,
-                colorDark: colorDark,
-                colorLight: colorLight,
-                correctLevel: QRCode.CorrectLevel.H
-            });
-        }
 
         function sendMessage(event) {
             event.preventDefault();
@@ -348,8 +299,6 @@
                 root.removeAttribute('data-theme');
                 updateIconForSystemTheme();
             }
-            // Regenerate QR code with new theme colors
-            generateQRCode();
         }
 
         function updateIconForSystemTheme() {
@@ -387,17 +336,14 @@
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
             if (!root.getAttribute('data-theme')) {
                 updateIconForSystemTheme();
-                generateQRCode();
             }
         });
 
-        // Initialize icon and QR code
+        // Initialize the theme icon
         document.addEventListener('DOMContentLoaded', function () {
             if (!root.getAttribute('data-theme')) {
                 updateIconForSystemTheme();
             }
-            // Small delay to ensure theme is applied before QR generation
-            setTimeout(generateQRCode, 10);
         });
     </script>
 </body>
