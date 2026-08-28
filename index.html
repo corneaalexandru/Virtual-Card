@@ -160,6 +160,20 @@
             font-weight: 600;
         }
 
+        .contact-form { display: grid; gap: 12px; margin-top: 28px; text-align: left; }
+        .contact-form label { font-size: 12px; color: var(--text-secondary); }
+        .contact-form input, .contact-form textarea {
+            width: 100%; margin-top: 6px; padding: 11px 12px;
+            border: 1px solid var(--border); border-radius: 8px;
+            background: var(--surface); color: var(--text-primary); font: inherit;
+        }
+        .contact-form textarea { min-height: 110px; resize: vertical; }
+        .contact-form button {
+            padding: 12px 16px; border: 1px solid var(--accent); border-radius: 8px;
+            background: var(--accent); color: var(--bg); cursor: pointer; font: inherit;
+        }
+        .contact-form .privacy-note { font-size: 11px; color: var(--text-secondary); }
+
         .skills-grid {
             display: flex;
             flex-wrap: wrap;
@@ -262,18 +276,17 @@
             <p class="about-text">I specialize in turning extreme technical complexity into disciplined, scalable
                 execution.</p>
             <div class="contact-info">
-                <a href="mailto:contact@alexandru-cornea.com?subject=Enquiry%20from%20alexandru-cornea.com"
-                    class="contact-item" title="Email">
-                    <i class="fas fa-envelope contact-icon"></i>
-                </a>
                 <a href="https://linkedin.com/in/alexandrucornea" target="_blank" class="contact-item" title="LinkedIn">
                     <i class="fab fa-linkedin contact-icon"></i>
                 </a>
-                <a href="Alexandru_Cornea.pdf" target="_blank" class="contact-item"
-                    title="Open CV">
-                    <span class="contact-icon" style="font-size: 14px; font-family: inherit;">CV</span>
-                </a>
             </div>
+            <form class="contact-form" onsubmit="sendMessage(event)">
+                <label for="name">Name<input id="name" name="name" type="text" autocomplete="name" required></label>
+                <label for="email">Email<input id="email" name="email" type="email" autocomplete="email" required></label>
+                <label for="message">Message<textarea id="message" name="message" required></textarea></label>
+                <button type="submit">Contact me</button>
+                <p class="privacy-note">The form opens your email application. No phone number or address is requested.</p>
+            </form>
         </div>
 
         <div class="qr-section">
@@ -312,6 +325,14 @@
                 colorLight: colorLight,
                 correctLevel: QRCode.CorrectLevel.H
             });
+        }
+
+        function sendMessage(event) {
+            event.preventDefault();
+            const form = event.target;
+            const subject = encodeURIComponent('Enquiry from alexandru-cornea.com');
+            const body = encodeURIComponent(`Name: ${form.name.value}\nEmail: ${form.email.value}\n\n${form.message.value}`);
+            window.location.href = `mailto:pho.pumice.3k@icloud.com?subject=${subject}&body=${body}`;
         }
 
         function setTheme(theme) {
